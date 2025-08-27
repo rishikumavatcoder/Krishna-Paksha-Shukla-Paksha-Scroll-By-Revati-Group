@@ -283,6 +283,7 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             overflow: hidden;
+            overflow-x: auto;
         }
 
         .tithi-table th,
@@ -290,12 +291,129 @@
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            white-space: nowrap;
         }
 
         .tithi-table th {
             background: linear-gradient(45deg, #ffd700, #ffed4a);
             color: #1a1a2e;
             font-weight: bold;
+        }
+
+        /* Table container for mobile scrolling */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem -1rem;
+            padding: 0 1rem;
+        }
+
+        /* Real-time clock styles */
+        .clock-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .analog-clock {
+            width: 150px;
+            height: 150px;
+            border: 3px solid #ffd700;
+            border-radius: 50%;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .clock-face {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .hour-mark {
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background: #ffd700;
+            left: 50%;
+            top: 5px;
+            transform-origin: 50% 69px;
+            transform: translateX(-50%);
+        }
+
+        .minute-mark {
+            position: absolute;
+            width: 1px;
+            height: 8px;
+            background: rgba(255, 215, 0, 0.6);
+            left: 50%;
+            top: 5px;
+            transform-origin: 50% 69px;
+            transform: translateX(-50%);
+        }
+
+        .clock-hand {
+            position: absolute;
+            background: #ffd700;
+            border-radius: 2px;
+            transform-origin: 50% 100%;
+            left: 50%;
+        }
+
+        .hour-hand {
+            width: 3px;
+            height: 40px;
+            top: 35px;
+            transform: translateX(-50%);
+        }
+
+        .minute-hand {
+            width: 2px;
+            height: 55px;
+            top: 20px;
+            transform: translateX(-50%);
+        }
+
+        .second-hand {
+            width: 1px;
+            height: 60px;
+            top: 15px;
+            background: #ff6b6b;
+            transform: translateX(-50%);
+        }
+
+        .clock-center {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .digital-time {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .digital-time .time-display {
+            font-size: 2rem;
+            color: #ffd700;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .digital-time .date-display {
+            font-size: 1rem;
+            color: #ffffff;
+            opacity: 0.8;
+            margin-top: 0.5rem;
         }
 
         /* Highlight Boxes */
@@ -544,6 +662,47 @@
 
             .nav-container {
                 padding: 0 1rem;
+            }
+
+            /* Fix table responsiveness */
+            .tithi-table th,
+            .tithi-table td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .table-container {
+                margin: 1.5rem -1.5rem;
+                padding: 0 1.5rem;
+            }
+
+            /* Clock responsiveness */
+            .clock-container {
+                gap: 1rem;
+            }
+
+            .analog-clock {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hour-hand {
+                height: 30px;
+                top: 30px;
+            }
+
+            .minute-hand {
+                height: 45px;
+                top: 15px;
+            }
+
+            .second-hand {
+                height: 50px;
+                top: 10px;
+            }
+
+            .digital-time .time-display {
+                font-size: 1.5rem;
             }
         }
 
@@ -836,33 +995,35 @@
                 <div class="slide-content">
                     <p style="margin-bottom: 2rem;">Each paksha consists of exactly 15 tithis (lunar days), each with specific characteristics and significance for various activities.</p>
                     
-                    <table class="tithi-table">
-                        <thead>
-                            <tr>
-                                <th>Tithi No.</th>
-                                <th>Sanskrit Name</th>
-                                <th>Meaning</th>
-                                <th>Special Significance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>1</td><td>Pratipada</td><td>First</td><td>New beginnings</td></tr>
-                            <tr><td>2</td><td>Dwitiya</td><td>Second</td><td>Partnerships</td></tr>
-                            <tr><td>3</td><td>Tritiya</td><td>Third</td><td>Prosperity</td></tr>
-                            <tr><td>4</td><td>Chaturthi</td><td>Fourth</td><td>Obstacle removal</td></tr>
-                            <tr><td>5</td><td>Panchami</td><td>Fifth</td><td>Knowledge</td></tr>
-                            <tr><td>6</td><td>Shashti</td><td>Sixth</td><td>Health</td></tr>
-                            <tr><td>7</td><td>Saptami</td><td>Seventh</td><td>Spiritual progress</td></tr>
-                            <tr><td>8</td><td>Ashtami</td><td>Eighth</td><td>Power & strength</td></tr>
-                            <tr><td>9</td><td>Navami</td><td>Ninth</td><td>Divine blessings</td></tr>
-                            <tr><td>10</td><td>Dashami</td><td>Tenth</td><td>Victory</td></tr>
-                            <tr><td>11</td><td>Ekadashi</td><td>Eleventh</td><td>Spiritual purification</td></tr>
-                            <tr><td>12</td><td>Dwadashi</td><td>Twelfth</td><td>Completion</td></tr>
-                            <tr><td>13</td><td>Trayodashi</td><td>Thirteenth</td><td>Transformation</td></tr>
-                            <tr><td>14</td><td>Chaturdashi</td><td>Fourteenth</td><td>Inner strength</td></tr>
-                            <tr><td>15</td><td>Purnima/Amavasya</td><td>Full/New Moon</td><td>Peak energy</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="tithi-table">
+                            <thead>
+                                <tr>
+                                    <th>Tithi No.</th>
+                                    <th>Sanskrit Name</th>
+                                    <th>Meaning</th>
+                                    <th>Special Significance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Pratipada</td><td>First</td><td>New beginnings</td></tr>
+                                <tr><td>2</td><td>Dwitiya</td><td>Second</td><td>Partnerships</td></tr>
+                                <tr><td>3</td><td>Tritiya</td><td>Third</td><td>Prosperity</td></tr>
+                                <tr><td>4</td><td>Chaturthi</td><td>Fourth</td><td>Obstacle removal</td></tr>
+                                <tr><td>5</td><td>Panchami</td><td>Fifth</td><td>Knowledge</td></tr>
+                                <tr><td>6</td><td>Shashti</td><td>Sixth</td><td>Health</td></tr>
+                                <tr><td>7</td><td>Saptami</td><td>Seventh</td><td>Spiritual progress</td></tr>
+                                <tr><td>8</td><td>Ashtami</td><td>Eighth</td><td>Power & strength</td></tr>
+                                <tr><td>9</td><td>Navami</td><td>Ninth</td><td>Divine blessings</td></tr>
+                                <tr><td>10</td><td>Dashami</td><td>Tenth</td><td>Victory</td></tr>
+                                <tr><td>11</td><td>Ekadashi</td><td>Eleventh</td><td>Spiritual purification</td></tr>
+                                <tr><td>12</td><td>Dwadashi</td><td>Twelfth</td><td>Completion</td></tr>
+                                <tr><td>13</td><td>Trayodashi</td><td>Thirteenth</td><td>Transformation</td></tr>
+                                <tr><td>14</td><td>Chaturdashi</td><td>Fourteenth</td><td>Inner strength</td></tr>
+                                <tr><td>15</td><td>Purnima/Amavasya</td><td>Full/New Moon</td><td>Peak energy</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -980,27 +1141,29 @@
                     Examples of Festivals
                 </h2>
                 <div class="slide-content">
-                    <table class="tithi-table">
-                        <thead>
-                            <tr>
-                                <th>Paksha</th>
-                                <th>Major Festivals</th>
-                                <th>Specific Tithi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Shukla Paksha</td>
-                                <td>Holi, Navratri, Guru Purnima, Ram Navami</td>
-                                <td>Purnima, Navami, Various</td>
-                            </tr>
-                            <tr>
-                                <td>Krishna Paksha</td>
-                                <td>Janmashtami, Maha Shivratri, Pitru Paksha</td>
-                                <td>Ashtami, Chaturdashi, Full Paksha</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="tithi-table">
+                            <thead>
+                                <tr>
+                                    <th>Paksha</th>
+                                    <th>Major Festivals</th>
+                                    <th>Specific Tithi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Shukla Paksha</td>
+                                    <td>Holi, Navratri, Guru Purnima, Ram Navami</td>
+                                    <td>Purnima, Navami, Various</td>
+                                </tr>
+                                <tr>
+                                    <td>Krishna Paksha</td>
+                                    <td>Janmashtami, Maha Shivratri, Pitru Paksha</td>
+                                    <td>Ashtami, Chaturdashi, Full Paksha</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     
                     <div class="festival-grid" style="margin-top: 2rem;">
                         <div class="festival-card">
@@ -1026,6 +1189,38 @@
                 <div class="calendar-widget">
                     <div class="current-date" id="currentDate">Loading...</div>
                     <div id="currentLocation" style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 1rem;">Pimpri-Chinchwad, Maharashtra, India</div>
+                    
+                    <!-- Real-time Clock -->
+                    <div class="clock-container">
+                        <div class="analog-clock">
+                            <div class="clock-face">
+                                <!-- Hour marks -->
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(0deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(30deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(60deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(90deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(120deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(150deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(180deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(210deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(240deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(270deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(300deg);"></div>
+                                <div class="hour-mark" style="transform: translateX(-50%) rotate(330deg);"></div>
+                                
+                                <!-- Clock hands -->
+                                <div class="clock-hand hour-hand" id="hourHand"></div>
+                                <div class="clock-hand minute-hand" id="minuteHand"></div>
+                                <div class="clock-hand second-hand" id="secondHand"></div>
+                                <div class="clock-center"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="digital-time">
+                            <div class="time-display" id="digitalTime">00:00:00</div>
+                            <div class="date-display" id="digitalDate">Loading...</div>
+                        </div>
+                    </div>
                     
                     <div class="lunar-info">
                         <div class="lunar-info-item">
@@ -1361,6 +1556,56 @@
             
             document.getElementById('todaySignificance').textContent = getSignificance(tithiInfo);
             document.getElementById('recommendedActivities').textContent = getRecommendedActivities(tithiInfo);
+            
+            // Update real-time clock
+            updateClock();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            
+            // Get IST time
+            const istTime = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+            
+            const hours = istTime.getHours();
+            const minutes = istTime.getMinutes();
+            const seconds = istTime.getSeconds();
+            
+            // Calculate angles for clock hands
+            const hourAngle = ((hours % 12) + minutes / 60) * 30; // 30 degrees per hour
+            const minuteAngle = (minutes + seconds / 60) * 6; // 6 degrees per minute
+            const secondAngle = seconds * 6; // 6 degrees per second
+            
+            // Update analog clock hands
+            const hourHand = document.getElementById('hourHand');
+            const minuteHand = document.getElementById('minuteHand');
+            const secondHand = document.getElementById('secondHand');
+            
+            if (hourHand) hourHand.style.transform = `translateX(-50%) rotate(${hourAngle}deg)`;
+            if (minuteHand) minuteHand.style.transform = `translateX(-50%) rotate(${minuteAngle}deg)`;
+            if (secondHand) secondHand.style.transform = `translateX(-50%) rotate(${secondAngle}deg)`;
+            
+            // Update digital time display
+            const digitalTime = document.getElementById('digitalTime');
+            const digitalDate = document.getElementById('digitalDate');
+            
+            if (digitalTime) {
+                digitalTime.textContent = istTime.toLocaleTimeString('en-IN', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            }
+            
+            if (digitalDate) {
+                digitalDate.textContent = istTime.toLocaleDateString('en-IN', {
+                    weekday: 'short',
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            }
         }
         
         // Calculator Functions
@@ -1450,8 +1695,8 @@
             const today = new Date();
             document.getElementById('calcDate').value = today.toISOString().split('T')[0];
             
-            // Update calendar every minute
-            setInterval(updateLiveCalendar, 60000);
+            // Update calendar every second for real-time clock
+            setInterval(updateLiveCalendar, 1000);
         });
 
         // Smooth scrolling for navigation links
