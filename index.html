@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindu Lunar Calendar & Paksha Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Fixed Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ffd700;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #1a1a2e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Mobile Navigation */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #ffd700;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-6px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-nav.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-nav a {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+            padding-left: 2.5rem;
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .slide-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .slide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .slide-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffed4a, #ffd700);
+        }
+
+        .slide-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .moon-emoji {
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .slide-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .slide-content ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .slide-content li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .slide-content li::before {
+            content: '✦';
+            color: #ffd700;
+            font-weight: bold;
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Festival Grid */
+        .festival-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .festival-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .festival-card:hover {
+            transform: scale(1.02);
+        }
+
+        .festival-card h3, .festival-card h4 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        /* Table Styling */
+        .tithi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .tithi-table th,
+        .tithi-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .tithi-table th {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #1a1a2e;
+            font-weight: bold;
+        }
+
+        /* Highlight Boxes */
+        .highlight {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 235, 59, 0.2));
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        /* Calendar Widget */
+        .calendar-widget {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            margin: 2rem 0;
+        }
+
+        .current-date {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .lunar-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .lunar-info-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .lunar-info-item:hover {
+            transform: scale(1.05);
+        }
+
+        .lunar-info-item h3 {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Calculator Styles */
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calc-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .calculate-btn, .calc-btn {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #1a1a2e;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .calculate-btn:hover, .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .result {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 0, 0.05));
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            text-align: center;
+            display: none;
+        }
+
+        .result-display {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .result-moon-phase {
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+
+        .quick-dates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .quick-date-btn {
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .quick-date-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #ffd700;
+            transform: translateY(-2px);
+        }
+
+        /* Lunar Cycle Display */
+        .lunar-cycle {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .moon-phase-icon {
+            text-align: center;
+            margin: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ffed4a);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 0.8rem;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .two-column, .calculator-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .festival-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lunar-info {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .current-date {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 6rem 1rem 2rem;
+            }
+            
+            .slide-card {
+                padding: 1.5rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-card {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Title Section Special Styling */
+        .title-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .title-section h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ffd700, #ffeb3b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .title-section .moon-phase {
+            font-size: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .title-section h2 {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Fixed Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#title" class="logo">🌙 Hindu Lunar Calendar</a>
+            <ul class="nav-links">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#shukla-paksha">Shukla Paksha</a></li>
+                <li><a href="#krishna-paksha">Krishna Paksha</a></li>
+                <li><a href="#cultural-significance">Significance</a></li>
+                <li><a href="#tithis">15 Tithis</a></li>
+                <li><a href="#mythology">Mythology</a></li>
+                <li><a href="#rituals">Rituals</a></li>
+                <li><a href="#festivals">Festivals</a></li>
+                <li><a href="#calendar">Live Calendar</a></li>
+                <li><a href="#calculator">Calculator</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#introduction" onclick="closeMobileNav()">Introduction</a>
+            <a href="#shukla-paksha" onclick="closeMobileNav()">Shukla Paksha</a>
+            <a href="#krishna-paksha" onclick="closeMobileNav()">Krishna Paksha</a>
+            <a href="#cultural-significance" onclick="closeMobileNav()">Significance</a>
+            <a href="#tithis" onclick="closeMobileNav()">15 Tithis</a>
+            <a href="#mythology" onclick="closeMobileNav()">Mythology</a>
+            <a href="#rituals" onclick="closeMobileNav()">Rituals</a>
+            <a href="#festivals" onclick="closeMobileNav()">Festivals</a>
+            <a href="#calendar" onclick="closeMobileNav()">Live Calendar</a>
+            <a href="#calculator" onclick="closeMobileNav()">Calculator</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Title Section -->
+        <section id="title" class="section">
+            <div class="title-section">
+                <h1>🌙 Krishna Paksha & Shukla Paksha 🌙</h1>
+                <div class="moon-phase">🌑 🌒 🌓 🌔 🌕 🌖 🌗 🌘</div>
+                <h2>Understanding Lunar Fortnights in Hindu Astronomy</h2>
+                <div style="margin-top: 2rem; font-size: 1.1rem;">
+                    <p>Exploring the Ancient Wisdom of Lunar Cycles</p>
+                    <p style="margin-top: 1rem; opacity: 0.8;">A Journey Through Time, Tradition, and Celestial Observations</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction Section -->
+        <section id="introduction" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🌓</span>
+                    Introduction to Lunar Phases in Hindu Calendar
+                </h2>
+                <div class="slide-content">
+                    <div class="highlight">
+                        <h3>The Lunar-Based Calendar System</h3>
+                        <p>The Hindu calendar is lunar-based, with each month divided into two distinct parts based on the moon's visibility and phases.</p>
+                    </div>
+                    
+                    <div class="two-column">
+                        <div>
+                            <h3>🌔 Shukla Paksha</h3>
+                            <ul>
+                                <li><strong>Waxing Phase</strong> – New Moon to Full Moon</li>
+                                <li>Moon increases in brightness each night</li>
+                                <li>Duration: Approximately 15 days</li>
+                                <li>Time of growth and new beginnings</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>🌘 Krishna Paksha</h3>
+                            <ul>
+                                <li><strong>Waning Phase</strong> – Full Moon to New Moon</li>
+                                <li>Moon decreases in brightness each night</li>
+                                <li>Duration: Approximately 15 days</li>
+                                <li>Time of reflection and release</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="lunar-cycle">
+                        <div class="moon-phase-icon">🌑<br>Amavasya</div>
+                        <div class="moon-phase-icon">→</div>
+                        <div class="moon-phase-icon">🌓<br>Shukla Paksha</div>
+                        <div class="moon-phase-icon">→</div>
+                        <div class="moon-phase-icon">🌕<br>Purnima</div>
+                        <div class="moon-phase-icon">→</div>
+                        <div class="moon-phase-icon">🌗<br>Krishna Paksha</div>
+                        <div class="moon-phase-icon">→</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shukla Paksha Section -->
+        <section id="shukla-paksha" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🌔</span>
+                    What is Shukla Paksha?
+                </h2>
+                <div class="slide-content">
+                    <div class="highlight">
+                        <h3>Etymology & Meaning</h3>
+                        <p><strong>"Shukla"</strong> means bright, white, or pure - referring to the increasing illumination of the moon each night.</p>
+                    </div>
+                    
+                    <div class="two-column">
+                        <div>
+                            <h3>🌙 Astronomical Details</h3>
+                            <ul>
+                                <li>Begins with <strong>Amavasya</strong> (New Moon)</li>
+                                <li>Ends with <strong>Purnima</strong> (Full Moon)</li>
+                                <li>Moon visibility: 0% → 100%</li>
+                                <li>Duration: Approximately 15 days</li>
+                                <li>Moon rises later each day</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>🎉 Cultural Significance</h3>
+                            <ul>
+                                <li><strong>Auspicious</strong> for rituals and weddings</li>
+                                <li>Ideal for <strong>new beginnings</strong></li>
+                                <li>Time for <strong>spiritual growth</strong></li>
+                                <li>Starting <strong>important ventures</strong></li>
+                                <li>Planning <strong>ceremonies</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <div class="moon-phase">🌑 → 🌒 → 🌓 → 🌔 → 🌕</div>
+                        <p style="font-style: italic;">The journey from darkness to complete illumination</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Krishna Paksha Section -->
+        <section id="krishna-paksha" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🌘</span>
+                    What is Krishna Paksha?
+                </h2>
+                <div class="slide-content">
+                    <div class="highlight">
+                        <h3>Etymology & Meaning</h3>
+                        <p><strong>"Krishna"</strong> means dark or black - referring to the diminishing light of the moon as it wanes towards complete darkness.</p>
+                    </div>
+                    
+                    <div class="two-column">
+                        <div>
+                            <h3>🌙 Astronomical Details</h3>
+                            <ul>
+                                <li>Begins with <strong>Purnima</strong> (Full Moon)</li>
+                                <li>Ends with <strong>Amavasya</strong> (New Moon)</li>
+                                <li>Moon visibility: 100% → 0%</li>
+                                <li>Duration: Approximately 15 days</li>
+                                <li>Moon rises earlier each day</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>🧘 Cultural Significance</h3>
+                            <ul>
+                                <li>Time for <strong>spiritual reflection</strong></li>
+                                <li>Ideal for <strong>meditation & tapasya</strong></li>
+                                <li>Period of <strong>letting go</strong></li>
+                                <li><strong>Ancestral worship</strong> practices</li>
+                                <li><strong>Inner contemplation</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <div class="moon-phase">🌕 → 🌖 → 🌗 → 🌘 → 🌑</div>
+                        <p style="font-style: italic;">The journey from complete illumination to darkness</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cultural Significance Section -->
+        <section id="cultural-significance" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">📆</span>
+                    Significance in Hindu Culture
+                </h2>
+                <div class="slide-content">
+                    <div class="highlight">
+                        <h3>Festival Calendar Foundation</h3>
+                        <p>Most Hindu festivals are precisely timed according to specific tithis within these pakshas, demonstrating the deep astronomical knowledge of ancient scholars.</p>
+                    </div>
+                    
+                    <div class="festival-grid">
+                        <div class="festival-card">
+                            <h3>🌔 Shukla Paksha Festivals</h3>
+                            <ul>
+                                <li><strong>Diwali</strong> - Kartik Amavasya (after)</li>
+                                <li><strong>Holi</strong> - Phalguna Purnima</li>
+                                <li><strong>Ram Navami</strong> - Chaitra Navami</li>
+                                <li><strong>Guru Purnima</strong> - Ashadha Purnima</li>
+                                <li><strong>Navratri</strong> - Ashwin/Chaitra</li>
+                            </ul>
+                        </div>
+                        <div class="festival-card">
+                            <h3>🌘 Krishna Paksha Festivals</h3>
+                            <ul>
+                                <li><strong>Krishna Janmashtami</strong> - Bhadrapada Ashtami</li>
+                                <li><strong>Maha Shivratri</strong> - Phalguna Chaturdashi</li>
+                                <li><strong>Pitru Paksha</strong> - Bhadrapada Krishna Paksha</li>
+                                <li><strong>Karva Chauth</strong> - Kartik Chaturthi</li>
+                                <li><strong>Ganga Dussehra</strong> - Jyeshtha Dashami</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <p><strong>Muhurat Calculation:</strong> Tithis (Lunar Dates) during Pakshas are used to determine auspicious days (Muhurats) for ceremonies, weddings, and important life events.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15 Tithis Section -->
+        <section id="tithis" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">📜</span>
+                    15 Tithis in Each Paksha
+                </h2>
+                <div class="slide-content">
+                    <p style="margin-bottom: 2rem;">Each paksha consists of exactly 15 tithis (lunar days), each with specific characteristics and significance for various activities.</p>
+                    
+                    <table class="tithi-table">
+                        <thead>
+                            <tr>
+                                <th>Tithi No.</th>
+                                <th>Sanskrit Name</th>
+                                <th>Meaning</th>
+                                <th>Special Significance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>Pratipada</td><td>First</td><td>New beginnings</td></tr>
+                            <tr><td>2</td><td>Dwitiya</td><td>Second</td><td>Partnerships</td></tr>
+                            <tr><td>3</td><td>Tritiya</td><td>Third</td><td>Prosperity</td></tr>
+                            <tr><td>4</td><td>Chaturthi</td><td>Fourth</td><td>Obstacle removal</td></tr>
+                            <tr><td>5</td><td>Panchami</td><td>Fifth</td><td>Knowledge</td></tr>
+                            <tr><td>6</td><td>Shashti</td><td>Sixth</td><td>Health</td></tr>
+                            <tr><td>7</td><td>Saptami</td><td>Seventh</td><td>Spiritual progress</td></tr>
+                            <tr><td>8</td><td>Ashtami</td><td>Eighth</td><td>Power & strength</td></tr>
+                            <tr><td>9</td><td>Navami</td><td>Ninth</td><td>Divine blessings</td></tr>
+                            <tr><td>10</td><td>Dashami</td><td>Tenth</td><td>Victory</td></tr>
+                            <tr><td>11</td><td>Ekadashi</td><td>Eleventh</td><td>Spiritual purification</td></tr>
+                            <tr><td>12</td><td>Dwadashi</td><td>Twelfth</td><td>Completion</td></tr>
+                            <tr><td>13</td><td>Trayodashi</td><td>Thirteenth</td><td>Transformation</td></tr>
+                            <tr><td>14</td><td>Chaturdashi</td><td>Fourteenth</td><td>Inner strength</td></tr>
+                            <tr><td>15</td><td>Purnima/Amavasya</td><td>Full/New Moon</td><td>Peak energy</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mythology Section -->
+        <section id="mythology" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🌌</span>
+                    Mythological & Astrological Relevance
+                </h2>
+                <div class="slide-content">
+                    <div class="two-column">
+                        <div>
+                            <h3>🌔 Shukla Paksha Associations</h3>
+                            <div class="highlight">
+                                <ul>
+                                    <li><strong>Deities:</strong> Vishnu, Lakshmi, Saraswati</li>
+                                    <li><strong>Elements:</strong> Light, growth, expansion</li>
+                                    <li><strong>Energy:</strong> Creative, constructive</li>
+                                    <li><strong>Activities:</strong> Building, planning, celebrating</li>
+                                    <li><strong>Psychological:</strong> Optimism, confidence</li>
+                                    <li><strong>Health:</strong> Vitality, healing</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>🌘 Krishna Paksha Associations</h3>
+                            <div class="highlight">
+                                <ul>
+                                    <li><strong>Deities:</strong> Shiva, Kali, Ancestors</li>
+                                    <li><strong>Elements:</strong> Darkness, introspection, release</li>
+                                    <li><strong>Energy:</strong> Reflective, transformative</li>
+                                    <li><strong>Activities:</strong> Meditation, fasting, letting go</li>
+                                    <li><strong>Psychological:</strong> Contemplation, wisdom</li>
+                                    <li><strong>Health:</strong> Detoxification, rest</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h3>🔬 Scientific Connections</h3>
+                        <div class="highlight">
+                            <p><strong>Modern Research:</strong> Studies suggest lunar cycles may influence ocean tides, agricultural growth, and even human circadian rhythms - validating ancient observations about the moon's impact on earthly phenomena and spiritual energy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rituals Section -->
+        <section id="rituals" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🧘‍♂️</span>
+                    Rituals and Practices
+                </h2>
+                <div class="slide-content">
+                    <div class="two-column">
+                        <div>
+                            <h3>🌔 Shukla Paksha Practices</h3>
+                            <div class="highlight">
+                                <h4>Recommended Activities:</h4>
+                                <ul>
+                                    <li><strong>Griha Pravesh</strong> (Housewarming)</li>
+                                    <li><strong>Vivaha</strong> (Wedding ceremonies)</li>
+                                    <li><strong>Vidyarambha</strong> (Education start)</li>
+                                    <li><strong>Temple visits & Pujas</strong></li>
+                                    <li><strong>Planting & sowing</strong></li>
+                                    <li><strong>Business ventures</strong></li>
+                                    <li><strong>Celebrations & festivals</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>🌘 Krishna Paksha Practices</h3>
+                            <div class="highlight">
+                                <h4>Recommended Activities:</h4>
+                                <ul>
+                                    <li><strong>Pitru Tarpana</strong> (Ancestral offerings)</li>
+                                    <li><strong>Ekadashi Vrata</strong> (Fasting)</li>
+                                    <li><strong>Meditation & Dhyana</strong></li>
+                                    <li><strong>Spiritual study</strong></li>
+                                    <li><strong>Tapasya</strong> (Austerity)</li>
+                                    <li><strong>Shiva worship</strong></li>
+                                    <li><strong>Self-reflection</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <h3>Special Observances</h3>
+                        <div class="festival-grid">
+                            <div class="festival-card">
+                                <h4>Ekadashi Fasting</h4>
+                                <p>Both pakshas have Ekadashi (11th tithi) - considered highly auspicious for spiritual practices and fasting. Many people follow vrats (fasts) on these days.</p>
+                            </div>
+                            <div class="festival-card">
+                                <h4>Ashtami Observances</h4>
+                                <p>The 8th tithi in both pakshas is significant - Durga Ashtami in Shukla Paksha and Krishna Janmashtami in Krishna Paksha.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Festivals Section -->
+        <section id="festivals" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🏮</span>
+                    Examples of Festivals
+                </h2>
+                <div class="slide-content">
+                    <table class="tithi-table">
+                        <thead>
+                            <tr>
+                                <th>Paksha</th>
+                                <th>Major Festivals</th>
+                                <th>Specific Tithi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Shukla Paksha</td>
+                                <td>Holi, Navratri, Guru Purnima, Ram Navami</td>
+                                <td>Purnima, Navami, Various</td>
+                            </tr>
+                            <tr>
+                                <td>Krishna Paksha</td>
+                                <td>Janmashtami, Maha Shivratri, Pitru Paksha</td>
+                                <td>Ashtami, Chaturdashi, Full Paksha</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="festival-grid" style="margin-top: 2rem;">
+                        <div class="festival-card">
+                            <h4>Regional Variations</h4>
+                            <p>Different regions may celebrate the same festival on different tithis based on local traditions and astronomical calculations.</p>
+                        </div>
+                        <div class="festival-card">
+                            <h4>Seasonal Connection</h4>
+                            <p>Many festivals align with seasonal changes, agricultural cycles, and the natural rhythm of lunar phases.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Calendar Section -->
+        <section id="calendar" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">📅</span>
+                    Real-Time Hindu Lunar Calendar
+                </h2>
+                <div class="calendar-widget">
+                    <div class="current-date" id="currentDate">Loading...</div>
+                    <div id="currentLocation" style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 1rem;">Pimpri-Chinchwad, Maharashtra, India</div>
+                    
+                    <div class="lunar-info">
+                        <div class="lunar-info-item">
+                            <h3>Day</h3>
+                            <div id="currentDay">-</div>
+                        </div>
+                        <div class="lunar-info-item">
+                            <h3>Tithi</h3>
+                            <div id="currentTithi">-</div>
+                        </div>
+                        <div class="lunar-info-item">
+                            <h3>Hindu Month</h3>
+                            <div id="currentMonth">-</div>
+                        </div>
+                        <div class="lunar-info-item">
+                            <h3>Paksha</h3>
+                            <div id="currentPaksha">-</div>
+                        </div>
+                        <div class="lunar-info-item">
+                            <h3>Moon Phase</h3>
+                            <div id="moonPhase">-</div>
+                        </div>
+                        <div class="lunar-info-item">
+                            <h3>Lunar Age</h3>
+                            <div id="lunarAge">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="festival-grid" style="margin-top: 2rem;">
+                        <div class="festival-card">
+                            <h4>Today's Significance</h4>
+                            <div id="todaySignificance" style="font-size: 0.95rem; line-height: 1.4;"></div>
+                        </div>
+                        <div class="festival-card">
+                            <h4>Recommended Activities</h4>
+                            <div id="recommendedActivities" style="font-size: 0.95rem; line-height: 1.4;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                        <p>Calendar updates every second | Based on traditional lunar calculations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section id="calculator" class="section">
+            <div class="slide-card">
+                <h2 class="slide-title">
+                    <span class="moon-emoji">🧮</span>
+                    Interactive Tithi Calculator
+                </h2>
+                <div class="slide-content">
+                    <p style="text-align: center; margin-bottom: 2rem; opacity: 0.9;">Calculate tithi for any date - past, present, or future. Find birth tithi and plan auspicious activities.</p>
+                    
+                    <div class="calculator-container">
+                        <!-- Date Input Section -->
+                        <div class="calc-section">
+                            <h3>Select Date</h3>
+                            
+                            <div class="form-group">
+                                <label for="calcDate">Choose Date:</label>
+                                <input type="date" id="calcDate" />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="calcTime">Time (Optional):</label>
+                                <input type="time" id="calcTime" value="12:00" />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="calcType">Calculation Type:</label>
+                                <select id="calcType">
+                                    <option value="general">General Tithi Info</option>
+                                    <option value="birth">Birth Tithi Analysis</option>
+                                    <option value="muhurat">Muhurat Planning</option>
+                                </select>
+                            </div>
+                            
+                            <button class="calc-btn" onclick="calculateTithi()">
+                                Calculate Tithi
+                            </button>
+                            
+                            <div class="quick-dates">
+                                <h4 style="grid-column: 1/-1; margin-bottom: 1rem; color: #ffd700;">Quick Options:</h4>
+                                <button class="quick-date-btn" onclick="setTodayDate()">Today</button>
+                                <button class="quick-date-btn" onclick="setBirthDate()">Birth Date</button>
+                                <button class="quick-date-btn" onclick="setFestivalDate('diwali')">Diwali 2024</button>
+                                <button class="quick-date-btn" onclick="setFestivalDate('holi')">Holi 2025</button>
+                                <button class="quick-date-btn" onclick="setFestivalDate('janmashtami')">Janmashtami</button>
+                                <button class="quick-date-btn" onclick="setRandomDate()">Random Date</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Results Section -->
+                        <div class="calc-section">
+                            <h3>Tithi Information</h3>
+                            
+                            <div id="calculatorResult" class="result-display" style="display: none;">
+                                <div class="result-moon-phase" id="resultMoonPhase">🌙</div>
+                                <div class="result-details">
+                                    <div><strong>Date:</strong> <span id="resultDate"></span></div>
+                                    <div><strong>Tithi:</strong> <span id="resultTithi"></span></div>
+                                    <div><strong>Paksha:</strong> <span id="resultPaksha"></span></div>
+                                    <div><strong>Lunar Age:</strong> <span id="resultLunarAge"></span> days</div>
+                                    <div><strong>Moon Phase:</strong> <span id="resultPhase"></span></div>
+                                    <div><strong>Hindu Month:</strong> <span id="resultHinduMonth"></span></div>
+                                </div>
+                            </div>
+                            
+                            <div id="noResult" style="text-align: center; padding: 2rem; opacity: 0.7;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🌙</div>
+                                <p>Select a date above to see tithi information</p>
+                                <p style="font-size: 0.9rem; margin-top: 1rem;">Perfect for finding birth tithi, festival dates, or planning auspicious activities!</p>
+                            </div>
+                            
+                            <!-- Additional Info -->
+                            <div id="additionalInfo" style="display: none; margin-top: 1.5rem;">
+                                <div class="highlight">
+                                    <h4>Significance & Recommendations</h4>
+                                    <div id="calcSignificance" style="margin-bottom: 1rem;"></div>
+                                    <div id="calcRecommendations"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Birth Tithi Special Section -->
+                    <div class="highlight" style="margin-top: 2rem;">
+                        <h3>Birth Tithi Significance</h3>
+                        <div class="two-column">
+                            <div>
+                                <p><strong>Your Birth Tithi reveals:</strong></p>
+                                <ul style="margin-top: 1rem; font-size: 0.95rem;">
+                                    <li>Personality traits and tendencies</li>
+                                    <li>Spiritual inclinations and path</li>
+                                    <li>Favorable activities and timing</li>
+                                    <li>Compatible lunar phases for important events</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p><strong>Use this calculator to:</strong></p>
+                                <ul style="margin-top: 1rem; font-size: 0.95rem;">
+                                    <li>Find your birth tithi and its meaning</li>
+                                    <li>Plan important events and ceremonies</li>
+                                    <li>Understand historical dates significance</li>
+                                    <li>Explore lunar patterns and cycles</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation functionality
+        function toggleMobileNav() {
+            const mobileNav = document.getElementById('mobileNav');
+            const hamburger = document.querySelector('.hamburger');
+            
+            mobileNav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        function closeMobileNav() {
+            const mobileNav = document.getElementById('mobileNav');
+            const hamburger = document.querySelector('.hamburger');
+            
+            mobileNav.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileNav = document.getElementById('mobileNav');
+            const hamburger = document.querySelector('.hamburger');
+            const navContainer = document.querySelector('.nav-container');
+            
+            if (!navContainer.contains(event.target) && mobileNav.classList.contains('active')) {
+                closeMobileNav();
+            }
+        });
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Lunar calculation functions (simplified for demonstration)
+        function getLunarPhase(date) {
+            const newMoon = new Date('2024-01-11'); // Reference new moon
+            const lunarCycle = 29.53058867; // Average lunar cycle in days
+            const daysSinceNewMoon = (date - newMoon) / (1000 * 60 * 60 * 24);
+            const lunarAge = ((daysSinceNewMoon % lunarCycle) + lunarCycle) % lunarCycle;
+            
+            return lunarAge;
+        }
+        
+        function getTithiInfo(lunarAge) {
+            const tithiLength = 29.53058867 / 30; // Each tithi is 1/30 of lunar month
+            const tithiNumber = Math.floor(lunarAge / tithiLength) + 1;
+            
+            const tithiNames = [
+                'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami',
+                'Shashti', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
+                'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Purnima',
+                'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami',
+                'Shashti', 'Saptami', 'Ashtami', 'Navami', 'Dashami',
+                'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Amavasya'
+            ];
+            
+            const adjustedTithi = tithiNumber <= 30 ? tithiNumber : 30;
+            const paksha = adjustedTithi <= 15 ? 'Shukla Paksha' : 'Krishna Paksha';
+            const tithiInPaksha = adjustedTithi <= 15 ? adjustedTithi : adjustedTithi - 15;
+            
+            return {
+                name: tithiNames[adjustedTithi - 1],
+                paksha: paksha,
+                number: tithiInPaksha,
+                lunarAge: Math.round(lunarAge * 10) / 10
+            };
+        }
+        
+        function getMoonPhaseIcon(lunarAge) {
+            if (lunarAge < 1.84) return '🌑'; // New Moon
+            else if (lunarAge < 5.53) return '🌒'; // Waxing Crescent
+            else if (lunarAge < 9.22) return '🌓'; // First Quarter
+            else if (lunarAge < 12.91) return '🌔'; // Waxing Gibbous
+            else if (lunarAge < 16.61) return '🌕'; // Full Moon
+            else if (lunarAge < 20.30) return '🌖'; // Waning Gibbous
+            else if (lunarAge < 23.99) return '🌗'; // Last Quarter
+            else if (lunarAge < 27.68) return '🌘'; // Waning Crescent
+            else return '🌑'; // New Moon
+        }
+        
+        function getMoonPhaseName(lunarAge) {
+            if (lunarAge < 1.84) return 'New Moon';
+            else if (lunarAge < 5.53) return 'Waxing Crescent';
+            else if (lunarAge < 9.22) return 'First Quarter';
+            else if (lunarAge < 12.91) return 'Waxing Gibbous';
+            else if (lunarAge < 16.61) return 'Full Moon';
+            else if (lunarAge < 20.30) return 'Waning Gibbous';
+            else if (lunarAge < 23.99) return 'Last Quarter';
+            else if (lunarAge < 27.68) return 'Waning Crescent';
+            else return 'New Moon';
+        }
+        
+        function getHinduMonth(date) {
+            const months = [
+                'Chaitra', 'Vaishakha', 'Jyeshtha', 'Ashadha',
+                'Shravana', 'Bhadrapada', 'Ashwin', 'Kartik',
+                'Margashirsha', 'Pausha', 'Magha', 'Phalguna'
+            ];
+            
+            // Approximate mapping (simplified)
+            const monthIndex = (date.getMonth() + 10) % 12;
+            return months[monthIndex];
+        }
+        
+        function getSignificance(tithiInfo) {
+            const specialTithis = {
+                'Ekadashi': 'Sacred fasting day, spiritual purification and divine connection',
+                'Ashtami': 'Day of divine power, strength, and Goddess worship',
+                'Purnima': 'Full moon - peak spiritual energy, meditation, and celebrations',
+                'Amavasya': 'New moon - introspection, new beginnings, and ancestral worship',
+                'Chaturdashi': 'Preparation for peak lunar energy, spiritual practices',
+                'Navami': 'Divine blessings, spiritual progress, and Goddess worship',
+                'Pratipada': 'Fresh starts, new ventures, and positive beginnings',
+                'Dashami': 'Victory and achievement, completion of goals'
+            };
+            
+            return specialTithis[tithiInfo.name] || `${tithiInfo.name} tithi in ${tithiInfo.paksha} - A day for balanced activities`;
+        }
+        
+        function getRecommendedActivities(tithiInfo) {
+            if (tithiInfo.paksha === 'Shukla Paksha') {
+                return 'Ideal for: New ventures, ceremonies, celebrations, starting projects, weddings, spiritual practices';
+            } else {
+                return 'Ideal for: Meditation, introspection, ancestral worship, fasting, spiritual reflection, letting go';
+            }
+        }
+        
+        function updateLiveCalendar() {
+            const now = new Date();
+            const lunarAge = getLunarPhase(now);
+            const tithiInfo = getTithiInfo(lunarAge);
+            
+            // Update date and time
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Asia/Kolkata'
+            };
+            
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-IN', options);
+            document.getElementById('currentDay').textContent = now.toLocaleDateString('en-IN', {
+                weekday: 'long'
+            });
+            document.getElementById('currentTithi').textContent = `${tithiInfo.name} (${tithiInfo.number}/15)`;
+            document.getElementById('currentPaksha').textContent = tithiInfo.paksha;
+            document.getElementById('currentMonth').textContent = getHinduMonth(now);
+            document.getElementById('moonPhase').textContent = getMoonPhaseIcon(lunarAge);
+            document.getElementById('lunarAge').textContent = tithiInfo.lunarAge + ' days';
+            
+            document.getElementById('todaySignificance').textContent = getSignificance(tithiInfo);
+            document.getElementById('recommendedActivities').textContent = getRecommendedActivities(tithiInfo);
+        }
+        
+        // Calculator Functions
+        function calculateTithi() {
+            const dateInput = document.getElementById('calcDate').value;
+            const timeInput = document.getElementById('calcTime').value;
+            
+            if (!dateInput) {
+                alert('Please select a date first!');
+                return;
+            }
+            
+            const selectedDate = new Date(dateInput + 'T' + timeInput);
+            const lunarAge = getLunarPhase(selectedDate);
+            const tithiInfo = getTithiInfo(lunarAge);
+            
+            // Show results
+            document.getElementById('noResult').style.display = 'none';
+            document.getElementById('calculatorResult').style.display = 'block';
+            document.getElementById('additionalInfo').style.display = 'block';
+            
+            // Update result elements
+            document.getElementById('resultMoonPhase').textContent = getMoonPhaseIcon(lunarAge);
+            document.getElementById('resultDate').textContent = selectedDate.toLocaleDateString('en-IN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('resultTithi').textContent = `${tithiInfo.name} (${tithiInfo.number}/15)`;
+            document.getElementById('resultPaksha').textContent = tithiInfo.paksha;
+            document.getElementById('resultLunarAge').textContent = tithiInfo.lunarAge;
+            document.getElementById('resultPhase').textContent = getMoonPhaseName(lunarAge);
+            document.getElementById('resultHinduMonth').textContent = getHinduMonth(selectedDate);
+            
+            // Additional info
+            document.getElementById('calcSignificance').textContent = getSignificance(tithiInfo);
+            document.getElementById('calcRecommendations').textContent = getRecommendedActivities(tithiInfo);
+        }
+        
+        function setTodayDate() {
+            const today = new Date();
+            document.getElementById('calcDate').value = today.toISOString().split('T')[0];
+            calculateTithi();
+        }
+        
+        function setBirthDate() {
+            const birthDate = prompt('Enter your birth date (YYYY-MM-DD):');
+            if (birthDate && /^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
+                document.getElementById('calcDate').value = birthDate;
+                document.getElementById('calcType').value = 'birth';
+                calculateTithi();
+            } else if (birthDate) {
+                alert('Please enter date in YYYY-MM-DD format (e.g., 1990-05-15)');
+            }
+        }
+        
+        function setFestivalDate(festival) {
+            const festivalDates = {
+                'diwali': '2024-11-01',
+                'holi': '2025-03-14',
+                'janmashtami': '2024-08-26'
+            };
+            
+            if (festivalDates[festival]) {
+                document.getElementById('calcDate').value = festivalDates[festival];
+                calculateTithi();
+            }
+        }
+        
+        function setRandomDate() {
+            const randomDates = [
+                '2024-01-26', '2024-08-15', '2024-10-02', '2024-12-25',
+                '2025-01-14', '2025-04-13', '2025-07-21', '2025-09-05'
+            ];
+            
+            const randomDate = randomDates[Math.floor(Math.random() * randomDates.length)];
+            document.getElementById('calcDate').value = randomDate;
+            calculateTithi();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLiveCalendar();
+            
+            // Set today's date as default in calculator
+            const today = new Date();
+            document.getElementById('calcDate').value = today.toISOString().split('T')[0];
+            
+            // Update calendar every minute
+            setInterval(updateLiveCalendar, 60000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile nav after clicking a link
+                closeMobileNav();
+            });
+        });
+    </script>
+</body>
+</html>
